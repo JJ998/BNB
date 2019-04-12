@@ -139,9 +139,7 @@ public class GameThread extends Thread{
 //		List<SuperElement> list=map.get("enemy");
 //		if(time%100==0)
 //			list.add(Enemy.createEnemy(null));
-		ElementManger.getManger().linkGame(time);
-	}
-	
+	}	
 	
 //	控制进度，但是，作为控制，请不要接触load
 	private void loadElement() {

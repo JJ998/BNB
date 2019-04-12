@@ -28,6 +28,7 @@ public class ElementFactory {
 		case "enemy":
 			String str=list1.get(list1.size()-1);
 			return Enemy.createEnemy(str);
+			
 		}
 		
 		return null;

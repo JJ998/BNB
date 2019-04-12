@@ -63,7 +63,7 @@ public class ElementLoad {
 //	读取图片
 	public void readImgPro()
 	{
-		InputStream in=ElementLoad.class.getClassLoader().getResourceAsStream("com/tedu/pro/map1.pro");
+		InputStream in=ElementLoad.class.getClassLoader().getResourceAsStream("com/tedu/pro/map.pro");
 		try {
 			pro.clear();
 			pro.load(in);
@@ -146,6 +146,8 @@ public class ElementLoad {
 	public List<String> getGameList() {
 		return gameList;
 	}
+	//下面加载地图上的各种原件
+//	public List<String> get
 	
 		
 }
