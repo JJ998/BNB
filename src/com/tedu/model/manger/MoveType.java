@@ -1,0 +1,7 @@
+package com.tedu.model.manger;
+
+//√∂æŸ¿‡–Õ
+
+public enum MoveType {
+	left,top,right,down,stop;
+}
