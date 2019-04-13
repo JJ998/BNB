@@ -75,7 +75,7 @@ public class Player extends SuperElement{
 		int y=Integer.parseInt(arr[3]);
 		int w=Integer.parseInt(arr[4]);
 		int h=Integer.parseInt(arr[5]);
-		ImageIcon img=ElementLoad.getElementLoad().getMap().get(arr[0]);
+		ImageIcon img = ElementLoad.getElementLoad().getMap().get(arr[0]);
 		return new Player(x,y,w,h,img);
 	}
 	

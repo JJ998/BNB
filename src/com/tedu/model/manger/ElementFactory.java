@@ -16,7 +16,7 @@ import com.tedu.model.vo.SuperElement;
 
 public class ElementFactory {
 	
-	public static SuperElement elementFactory(String name)
+	public static SuperElement[] elementFactory(String name)
 	{
 		Map<String,List<String>> map=ElementLoad.getElementLoad().getPlaymap();
 		List<String> list1=ElementLoad.getElementLoad().getGameList();
@@ -29,12 +29,18 @@ public class ElementFactory {
 			String s=list.get(0);//playerA,playFire,150,300,40,40
 			System.out.println("-----draw player-----");
 			System.out.println(s);
-			return Player.createPlayer(s);
+			SuperElement[] players = { Player.createPlayer(s) };
+			return players;
 		case "enemy":
-			String str=list1.get(list1.size()-1);
 			System.out.println("-----draw enemy-----");
-			System.out.println(str);
-			return Enemy.createEnemy(str);
+            Enemy[] enemys = new Enemy[list1.size()];
+			int i;
+			for(i = 0; i < list1.size(); i++) {
+                String str = list1.get(i);
+                System.out.println(str);
+                enemys[i] = Enemy.createEnemy(str);
+            }
+			return enemys;
 		/*case"basemap":
 			String s2=basemap.get();
 			return Map.createBaseMap(s2);*/

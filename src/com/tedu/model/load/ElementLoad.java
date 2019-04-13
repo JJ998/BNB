@@ -44,9 +44,8 @@ public class ElementLoad {
 //	读取流程
 	public void readGamepro()
 	{
-		InputStream in=ElementLoad.class.getClassLoader().getResourceAsStream("com/tedu/pro/GameRunA.pro");
 		try {
-			BaseMap baseMap = new BaseMap("E:\\Alrene\\BNB\\res\\map\\level1.txt");
+			BaseMap baseMap = new BaseMap("com/tedu/pro/map/level1.pro");
 			gameList = baseMap.getGameList();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -137,7 +136,7 @@ public class ElementLoad {
 //	读地图
 	public void readBaseMap() {
 		try {
-			BaseMap baseMap = new BaseMap("E:\\Alrene\\BNB\\res\\map\\level1.txt");
+			BaseMap baseMap = new BaseMap("com/tedu/pro/map/level1.pro");
 			gameList = baseMap.getGameList();
 		} catch (IOException e) {
 			e.printStackTrace();

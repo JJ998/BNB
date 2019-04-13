@@ -88,7 +88,7 @@ public class Enemy extends SuperElement{
 
 	@Override
 	public void showElement(Graphics g) {
-		g.drawImage(img.getImage(), getX(), getY(), getW(), getH(), null);
+		if(img != null) g.drawImage(img.getImage(), getX(), getY(), getW(), getH(), null);
 //		int movex;
 //		for(movex=0;movex<8;movex++)
 //		{

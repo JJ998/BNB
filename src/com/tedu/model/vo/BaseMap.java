@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 
 import javax.swing.ImageIcon;
@@ -14,7 +15,7 @@ import javax.swing.ImageIcon;
 import com.tedu.model.load.ElementLoad;
 
 public class BaseMap extends SuperElement{
-	private String mapPath = "E:\\Alrene\\BNB\\res\\map\\level1.txt";
+	private URL mapPath = BaseMap.class.getClassLoader().getResource("com/tedu/pro/map/level1.pro");
 	private int map[][];//存放对应位置上的0，1，2
 	private int rows;//地图单元格行数
 	private int cols;//地图单元格列数
@@ -31,10 +32,11 @@ public class BaseMap extends SuperElement{
 	}*/
 
 	public BaseMap(String file) throws IOException {
-		mapPath = file;
+		mapPath = BaseMap.class.getClassLoader().getResource(file);
+		System.out.println(mapPath);
 		BufferedReader reader;
 		try {
-			reader = new BufferedReader(new FileReader(mapPath));
+			reader = new BufferedReader(new FileReader(mapPath.toString().split(":")[1]));
 			String tempString;
 			tempString = reader.readLine();
 			String[] size = tempString.split(","); // 行列

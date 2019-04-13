@@ -100,8 +100,15 @@ public class ElementManger {
 		ElementLoad.getElementLoad().readGamepro();
 //		开放一个状态，界面可以做前戏了（前面的过渡信息）
 //		。。。。。。
-		map.get("play").add(ElementFactory.elementFactory("oneplayer"));
-		map.get("play").add(ElementFactory.elementFactory("enemy"));
+		int i;
+        SuperElement[] players = ElementFactory.elementFactory("oneplayer");
+        if (players != null) {
+            for(i = 0; i < players.length; i++) map.get("play").add(players[i]);
+        }
+        SuperElement[] enemies = ElementFactory.elementFactory("enemy");
+        if (enemies != null) {
+            for(i = 0; i < enemies.length; i++) map.get("enemy").add(enemies[i]);
+        }
 	}
 
 //控制流程 int time游戏进行时间
@@ -118,7 +125,11 @@ public class ElementManger {
 		int runTime=Integer.parseInt(arr[arr.length-1]);
 		if(time>runTime)
 		{
-			map.get("enemy").add(ElementFactory.elementFactory("enemy"));
+		    int i;
+            SuperElement[] enemies = ElementFactory.elementFactory("enemy");
+            if (enemies != null) {
+                for(i = 0; i < enemies.length; i++) map.get("enemy").add(enemies[i]);
+            }
 			list.remove(list.size()-1);
 		}
 //		if(两个时间匹配上)
