@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 import com.tedu.model.load.ElementLoad;
-import com.tedu.model.vo.Enemy;
+import com.tedu.model.vo.Puzzle;
 import com.tedu.model.vo.Player;
 //import com.tedu.model.vo.Moon;
 //import com.tedu.model.vo.Star;

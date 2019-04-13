@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.tedu.model.manger.ElementManger;
-import com.tedu.model.vo.Enemy;
+import com.tedu.model.vo.Puzzle;
 import com.tedu.model.vo.SuperElement;
 
 //java是单继承，多实现。通过内部类的方式，弥补单继承的缺陷

@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 
 import com.tedu.model.load.ElementLoad;
-import com.tedu.model.vo.Enemy;
+import com.tedu.model.vo.Puzzle;
 import com.tedu.model.vo.Player;
 import com.tedu.model.vo.SuperElement;
 
@@ -33,12 +33,12 @@ public class ElementFactory {
 			return players;
 		case "enemy":
 			System.out.println("-----draw enemy-----");
-            Enemy[] enemys = new Enemy[list1.size()];
+            Puzzle[] enemys = new Puzzle[list1.size()];
 			int i;
 			for(i = 0; i < list1.size(); i++) {
                 String str = list1.get(i);
                 System.out.println(str);
-                enemys[i] = Enemy.createEnemy(str);
+                enemys[i] = Puzzle.createPuzzle(str);
             }
 			return enemys;
 		/*case"basemap":

@@ -10,30 +10,20 @@ import javax.swing.ImageIcon;
 import com.tedu.model.load.ElementLoad;
 import com.tedu.model.manger.ElementManger;
 
-public class Enemy extends SuperElement{
+public class Puzzle extends SuperElement {
 	
 	private ImageIcon img;
 	private int time=0;//敌机射击开关
-	private String name;//敌机种类
-	
-	public Enemy (int x,int y,int w,int h,ImageIcon img)
+
+	public Puzzle(int x, int y, int w, int h, ImageIcon img)
 	{
 		super(x,y,w,h);
 		this.setHp(10);
 		this.img=img;
 	}
-	
-	public static Enemy createEnemy(String str)
+
+	public static Puzzle createPuzzle(String str)
 	{
-		
-//		int x=(int)(Math.random()*300);
-//		int y=0;
-//		int w=50;
-//		int h=50;
-//		int num=(int)(Math.random()*12);
-//		String url="img/enemy/"+num+".png";
-//		return new Enemy(x,y,w,h,new ImageIcon(url));
-		
 		String []arr=str.split(",");
 		int x=Integer.parseInt(arr[2]);
 		int y=Integer.parseInt(arr[3]);
@@ -41,19 +31,8 @@ public class Enemy extends SuperElement{
 		int h=Integer.parseInt(arr[5]);
 		ImageIcon img = ElementLoad.getElementLoad().getMap().get(arr[0]);
 
-		Enemy enemy=null;
-		switch(arr[0])
-		{
-		case "enemyA":
-			enemy=new EnemyLeftToRight(x,y,w,h,img);
-			break;
-		case "enemyB":
-			enemy=new EnemyRightToLeft(x,y,w,h,img);
-			break;
-		default:
-			enemy=new Enemy(x,y,w,h,img);
-			break;
-		}
+		Puzzle enemy = null;
+		enemy = new Puzzle(x, y, w, h, img);
 		
 		return enemy;//(x,y,w,h,img);
 	}
@@ -124,6 +103,4 @@ public class Enemy extends SuperElement{
 	public void setImg(ImageIcon img) {
 		this.img = img;
 	}
-
-	
 }

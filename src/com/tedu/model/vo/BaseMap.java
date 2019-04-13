@@ -53,36 +53,29 @@ public class BaseMap extends SuperElement{
 					map[i][j++] = Integer.parseInt(num);
 				i++;
 			}
-			cols = i-1;
-			rows = j-1;
+
+            cols = i;
+            rows = j;
 			reader.close();
+            //TODO:获取对应位置的状态
+            //并根据状态，随机生成对应的组件
+            //生成 获取该位置的组件 的字符串，如001=enemyA,enemyA,20,40,40,40,100
+            Integer x, y;
+            gameList = new ArrayList<>();
+            for (i = 0; i < cols; i++) {
+                for (j = 0; j < rows; j++) {
+                    // enemjA,enemjA,20,40,40,40,100
+                    int state = map[i][j];
+                    String s = randomImg(state);
+                    y = i * 30;
+                    x = j * 30;
+                    String tempStr = s + ",enemy," + x.toString() + "," + y.toString() + ",30,30,0";
+                    System.out.println(tempStr);
+                    gameList.add(tempStr);
+                }
+            }
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}
-
-		//TODO:获取对应位置的状态
-		//并根据状态，随机生成对应的组件
-		//生成 获取该位置的组件 的字符串，如001=enemyA,enemyA,20,40,40,40,100
-		int i,j,k;
-		Integer x, y;
-		int th=0;
-		k=0;
-		gameList = new ArrayList<String>();
-		for(i=0;i<cols;i++) {
-
-			for(j=0;j<rows;j++) {
-				// enemjA,enemjA,20,40,40,40,100
-				int state = map[i][j];
-				String s=randomImg(state);
-				/*mapPuzzlePath[k] = th +"="+ s +",enemj,"+ i*45 +","+ j*45 + "45,45,0";
-				th++;
-				System.out.println(mapPuzzlePath[k]+"\n");
-				img = ElementLoad.getElementLoad().getBaseMap().get(s);*/
-				x = i*45; y = j * 45;
-				String tempStr = s +",enemy,"+ x.toString() +","+ y.toString() + ",45,45,0";
-				System.out.println(tempStr);
-				gameList.add(tempStr);
-			}
 		}
 	}
 
@@ -160,8 +153,8 @@ public class BaseMap extends SuperElement{
 				return "yellowHouse";
 			case 4:
 				return "blueHouse";
-			case 5:
-				return "smallBush";  
+                default:
+                    return "smallBush";
 			}
 //		可以爆炸的组件
 		case 2:
@@ -177,7 +170,7 @@ public class BaseMap extends SuperElement{
 				return "redBox";
 			case 5:
 				return "woodenBox";
-			case 6:
+                default:
 				return "trafficCones";
 			}
 		default:
