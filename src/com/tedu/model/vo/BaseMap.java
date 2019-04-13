@@ -16,7 +16,7 @@ import com.tedu.model.load.ElementLoad;
 
 public class BaseMap extends SuperElement{
 	private URL mapPath = BaseMap.class.getClassLoader().getResource("com/tedu/pro/map/level1.pro");
-	private int map[][];//存放对应位置上的0，1，2
+	private static int map[][];//存放对应位置上的0，1，2
 	private int rows;//地图单元格行数
 	private int cols;//地图单元格列数
 	private String mapPuzzlePath[];//存放每一个单元格存放的图片的地址
@@ -70,7 +70,7 @@ public class BaseMap extends SuperElement{
                     y = i * 30;
                     x = j * 30;
                     String tempStr = s + ",enemy," + x.toString() + "," + y.toString() + ",30,30,0";
-                    System.out.println(tempStr);
+//                    System.out.println(tempStr);
                     gameList.add(tempStr);
                 }
             }
@@ -212,5 +212,10 @@ public class BaseMap extends SuperElement{
 		
 	}
 	
-	
+
+	static boolean haveBarrier(int x, int y) {
+		return (map[y][x] > 0);
+//		return false;
+	}
+
 }

@@ -54,12 +54,12 @@ public class Player extends SuperElement{
 	{
 		super(x,y,w,h);
 		this.setHp(100);
-		this.img=img;
-		num=0;
-		moveType=MoveType.stop;
+		this.img = img;
+		num = 0;
+		moveType = MoveType.stop;
 		vMoveType = VMoveType.stop;
 		hMoveType = HMoveType.stop;
-		shoot=false;
+		shoot = false;
 	}
 	
 //  可以直接调用这个方法，用来得到一个玩家对象 str里面包含玩家对象的信息
@@ -100,22 +100,34 @@ public class Player extends SuperElement{
 		{
 		case top:
 			tap=1;
-			setY(getY()-45);
+			if(getY() > -42 &&
+					!BaseMap.haveBarrier((getX()+35)/30, (getY()+72)/30-1))
+				setY(getY()-30);
+//			System.out.println(getY());
 			updateImageTop();
 			break;
 		case down:
 			tap=3;
-			setY(getY()+45);
+			if(getY() < 378 &&
+					!BaseMap.haveBarrier((getX()+35)/30, (getY()+72)/30+1))
+				setY(getY()+30);
+//			System.out.println(getY());
 			updateImageDown();
 			break;
 		case left:
 			tap=4;
-			setX(getX()-45);
+			if(getX() > -35 &&
+					!BaseMap.haveBarrier((getX()+35)/30-1, (getY()+72)/30))
+				setX(getX()-30);
+//			System.out.println(getX());
 			updateImageLeft();
 			break;
 		case right:
 			tap=2;
-			setX(getX()+45);
+			if(getX() < 415 &&
+					!BaseMap.haveBarrier((getX()+35)/30+1, (getY()+72)/30))
+				setX(getX()+30);
+//			System.out.println(getX());
 			updateImageRight();
 			break;
 		case stop:

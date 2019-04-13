@@ -1,1 +1,1 @@
-oneplayer=playerA,playFire,150,200,100,100
+oneplayer=playerA,playFire,145,198,100,100

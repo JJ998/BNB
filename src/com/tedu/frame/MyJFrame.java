@@ -33,8 +33,8 @@ public class MyJFrame extends JFrame{
 	public void init()
 	{
 		this.setTitle("game");//设置标题
-        this.setSize(600, 480);//设置大小
-		//this.setResizable(false);//设置窗体不可以修改大小
+        this.setSize(600, 520);//设置大小
+		this.setResizable(false);//设置窗体不可以修改大小
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置关闭状态
 		this.setLocationRelativeTo(null);//设置居中
 	}

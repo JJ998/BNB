@@ -20,8 +20,7 @@ public class ElementFactory {
 	{
 		Map<String,List<String>> map=ElementLoad.getElementLoad().getPlaymap();
 		List<String> list1=ElementLoad.getElementLoad().getGameList();
-		List<String> list2=ElementLoad.getElementLoad().getGameList();
-		
+
 		switch(name)
 		{
 		case "oneplayer":
