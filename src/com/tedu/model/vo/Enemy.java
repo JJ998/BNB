@@ -40,6 +40,7 @@ public class Enemy extends SuperElement{
 		int w=Integer.parseInt(arr[4]);
 		int h=Integer.parseInt(arr[5]);
 		ImageIcon img = ElementLoad.getElementLoad().getMap().get(arr[0]);
+
 		Enemy enemy=null;
 		switch(arr[0])
 		{
@@ -79,14 +80,6 @@ public class Enemy extends SuperElement{
 		
 		ElementManger.getManger().getMap().put("EnemyFire", list);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 	private boolean shootby(SuperElement superElement) {
 		// TODO Auto-generated method stub
@@ -105,13 +98,13 @@ public class Enemy extends SuperElement{
 
 	@Override
 	public void move() {
-		setY(getY()+3);
+		/*setY(getY()+3);
 		if(getY()>500)
 		{
 //			setVisible(false);
 			setY(0);
 			setX((int)(Math.random()*250));
-		}
+		}*/
 		
 	}
 

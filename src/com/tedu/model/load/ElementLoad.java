@@ -1,5 +1,7 @@
 package com.tedu.model.load;
 
+import com.tedu.model.vo.BaseMap;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ public class ElementLoad {
 	private Map<String,List<String>> playmap;
 	private Map<String,List<String>> enemymap;
 	private List<String> gameList;//游戏的流程控制 兵力出现控制
+	private Map<String,ImageIcon> basemap;//	地图
 	
 	private static ElementLoad load;
 //	pro文件读取对象
@@ -42,7 +45,13 @@ public class ElementLoad {
 	public void readGamepro()
 	{
 		InputStream in=ElementLoad.class.getClassLoader().getResourceAsStream("com/tedu/pro/GameRunA.pro");
-		pro.clear();
+		try {
+			BaseMap baseMap = new BaseMap("E:\\Alrene\\BNB\\res\\map\\level1.txt");
+			gameList = baseMap.getGameList();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		/*pro.clear();
 		try {
 			pro.load(in);
 			for(Object o:pro.keySet())
@@ -57,7 +66,7 @@ public class ElementLoad {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 //	读取图片
@@ -125,12 +134,38 @@ public class ElementLoad {
 		System.out.println(playmap);
 	}
 	
+//	读地图
+	public void readBaseMap() {
+		try {
+			BaseMap baseMap = new BaseMap("E:\\Alrene\\BNB\\res\\map\\level1.txt");
+			gameList = baseMap.getGameList();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		/*InputStream in=ElementLoad.class.getClassLoader().getResourceAsStream("com/tedu/pro/map.pro");
+		try {
+			pro.clear();
+			pro.load(in);
+			Set<?> set=pro.keySet();
+			for(Object o:set)
+			{
+				String url=pro.getProperty(o.toString());
+				map.put(o.toString(), new ImageIcon(url));		
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+//		System.out.println(map);
+	}
+	
 	public static void main(String[] args)
 	{
 		
 		getElementLoad().readPlayPro();
 		getElementLoad().readImgPro();
 		getElementLoad().readGamepro();
+		getElementLoad().readBaseMap();
 	}
 	
 	
@@ -147,7 +182,9 @@ public class ElementLoad {
 		return gameList;
 	}
 	//下面加载地图上的各种原件
-//	public List<String> get
+	public Map<String,ImageIcon> getBaseMap(){
+		return basemap;
+	}
 	
 		
 }

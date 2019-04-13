@@ -101,6 +101,7 @@ public class ElementManger {
 //		开放一个状态，界面可以做前戏了（前面的过渡信息）
 //		。。。。。。
 		map.get("play").add(ElementFactory.elementFactory("oneplayer"));
+		map.get("play").add(ElementFactory.elementFactory("enemy"));
 	}
 
 //控制流程 int time游戏进行时间
