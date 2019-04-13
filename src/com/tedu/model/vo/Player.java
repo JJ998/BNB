@@ -171,7 +171,7 @@ public class Player extends SuperElement{
 		}
 	}
 
-	public void addFire()
+	/*public void addFire()
 	{
 //		按住空格不放持续射击
 //		if(time<10) {
@@ -192,14 +192,14 @@ public class Player extends SuperElement{
 //		ElementManger.getManger().getMap().put("playFire", list);
 		
 		shoot=false;//每按一次只能发射一颗子弹
-	}
+	}*/
 	
 //	重写父类的模板
 	public void update()
 	{
 		//time++;
 		super.update();//如果没有这句话，就是重写制定模板
-		addFire();//追加
+		//addFire();//追加
 //		updateImage();
 	}
 	

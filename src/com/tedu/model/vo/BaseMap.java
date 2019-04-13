@@ -36,7 +36,7 @@ public class BaseMap extends SuperElement{
 		System.out.println(mapPath);
 		BufferedReader reader;
 		try {
-			reader = new BufferedReader(new FileReader(mapPath.toString().split(":")[1]));
+			reader = new BufferedReader(new FileReader(mapPath.toString().split("file:")[1]));
 			String tempString;
 			tempString = reader.readLine();
 			String[] size = tempString.split(","); // ппап

@@ -17,7 +17,7 @@ public class GameListener implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e)//按下  左37 上38 右39 下40
 	{
-		list=ElementManger.getManger().getElementList("play");
+		list=ElementManger.getManger().getElementList("player");
 		Player play=(Player)list.get(0);
 		switch(e.getKeyCode())
 		{
@@ -42,7 +42,7 @@ public class GameListener implements KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e)//松开
 	{
-		list=ElementManger.getManger().getElementList("play");
+		list=ElementManger.getManger().getElementList("player");
 		Player play=(Player)list.get(0);
 		switch(e.getKeyCode())
 		{
