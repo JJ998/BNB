@@ -71,7 +71,7 @@ public class BaseMap extends SuperElement{
                     x = j * 30;
                     String tempStr = s + ",enemy," + x.toString() + "," + y.toString() + ",30,30,0";
 //                    System.out.println(tempStr);
-                    gameList.add(tempStr);
+                    if (state > 0) gameList.add(tempStr);
                 }
             }
 		} catch (FileNotFoundException e) {
