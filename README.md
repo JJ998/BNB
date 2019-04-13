@@ -7,6 +7,8 @@ It's a game.
 
 ## Usage
 
+**important: please use gitignore**
+
 规约包，类
 
 1.包：
