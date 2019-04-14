@@ -17,11 +17,29 @@ public class Player extends SuperElement{
 	private int num;//分数
 	private ImageIcon img;
 	private int time=0;//控制玩家子弹发射速率
+//	地图障碍数组，0表示可以行走
+	private int MapList[][]=new int [16][16];
+	static int[][] canwalk={
+			{0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1},
+			{1,0,0,0,1,1,0,1,0,1,0,1,0,1,0,0},
+			{0,1,0,1,1,1,1,0,0,1,0,1,0,1,0,0},
+			{1,0,0,1,1,0,0,2,1,0,1,0,0,1,1,0},
+			{1,0,1,0,1,1,0,1,0,1,1,0,1,1,1,0},
+			{0,0,1,0,1,0,0,2,1,0,1,0,0,1,1,0},
+			{0,1,1,0,1,1,0,1,0,1,0,1,0,1,0,0},
+			{0,0,0,1,1,1,0,1,0,1,1,0,1,1,1,0},
+			{1,1,0,0,0,1,1,0,1,0,1,0,1,0,1,0},
+			{0,1,0,0,1,1,0,1,0,1,0,1,0,1,0,0},
+			{0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,0},
+			{0,1,1,1,0,1,1,0,1,0,1,0,1,0,1,0},
+			{0,1,1,0,1,0,0,2,1,0,1,0,0,1,1,0},
+			{0,0,0,0,0,1,1,0,1,0,1,0,1,0,1,0},
+			{0,0,0,0,0,1,1,0,1,0,1,0,1,0,1,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+//	MapArray ma=new MapArray();
+//	ma.setCanwalk(canwalk);
 	int tap=0;
-//  当前玩家的名称。。。。。。
-//	玩家的控制方向1个变量会用到新知识，而多个变量时使用boolean值 2个或4个
-//	private boolean top;
-//	private boolean left;
+	
 
 	private MoveType moveType;//0 1 2 3
 	private HMoveType hMoveType;
@@ -54,12 +72,12 @@ public class Player extends SuperElement{
 	{
 		super(x,y,w,h);
 		this.setHp(100);
-		this.img = img;
-		num = 0;
-		moveType = MoveType.stop;
+		this.img=img;
+		num=0;
+		moveType=MoveType.stop;
 		vMoveType = VMoveType.stop;
 		hMoveType = HMoveType.stop;
-		shoot = false;
+		shoot=false;
 	}
 	
 //  可以直接调用这个方法，用来得到一个玩家对象 str里面包含玩家对象的信息
@@ -75,20 +93,19 @@ public class Player extends SuperElement{
 		int y=Integer.parseInt(arr[3]);
 		int w=Integer.parseInt(arr[4]);
 		int h=Integer.parseInt(arr[5]);
-		ImageIcon img = ElementLoad.getElementLoad().getMap().get(arr[0]);
+		ImageIcon img=ElementLoad.getElementLoad().getMap().get(arr[0]);
 		return new Player(x,y,w,h,img);
 	}
 	
 	@Override
 	public void showElement(Graphics g) 
 	{
+		changeMapList();
 		g.drawImage(img.getImage(), 
 				getX(), getY(),                  //屏幕左上角坐标
 				getX()+getW(), getY()+getH(),    //屏幕右下角坐标
-					0+(100*moveX), 0+(100*moveY),    //图片左上角坐标        60 ,0
-					100+(100*moveX), 100+(100*moveY),    //图片右下角坐标  120,60
-//					moveX, 0,    //图片左上角坐标        60 ,0
-//					moveX+60, 60,	
+					0+(50*moveX), 0+(60*moveY),    //图片左上角坐标    0 ,0
+					50+(50*moveX), 60+(60*moveY),    //图片右下角坐标  50,60
 					null);
 
 	}
@@ -96,46 +113,120 @@ public class Player extends SuperElement{
 	
 	public void move()
 	{
+			switch(moveType)
+			{
+			case top:
+				tap=1;
+				if(getY()>0)
+					if(judge(getX(),getY(),MoveType.top))
+						setY(getY()-45);
+				showxy();
+				updateImageTop();
+				break;
+			case down:
+				tap=3;
+				if(getY()<675)
+					if(judge(getX(),getY(),MoveType.down))
+						setY(getY()+45);
+				showxy();
+				updateImageDown();
+				break;
+			case left:
+				tap=4;
+				if(getX()>10)
+					if(judge(getX(),getY(),MoveType.left))
+						setX(getX()-45);
+				showxy();
+				updateImageLeft();
+				break;
+			case right:
+				tap=2;
+				if(getX()<675)
+					if(judge(getX(),getY(),MoveType.right))
+						setX(getX()+45);
+				showxy();
+				updateImageRight();
+				break;
+			case stop:
+				tap=0;
+				if (moveType == MoveType.stop) {
+					updateImageStop();
+				}
+				break;
+			}
+	}
+	
+	public boolean judge(int getX,int getY,MoveType moveType)//判断前进的方向是否有障碍物，如果有返回false，没有返回true
+	{
+		boolean result=false;
+		int x=getX/45;
+		int y=getY/45;
 		switch(moveType)
 		{
 		case top:
-			tap=1;
-			if(getY() > -42 &&
-					!BaseMap.haveBarrier((getX()+35)/30, (getY()+72)/30-1))
-				setY(getY()-30);
-//			System.out.println(getY());
-			updateImageTop();
-			break;
-		case down:
-			tap=3;
-			if(getY() < 378 &&
-					!BaseMap.haveBarrier((getX()+35)/30, (getY()+72)/30+1))
-				setY(getY()+30);
-//			System.out.println(getY());
-			updateImageDown();
-			break;
-		case left:
-			tap=4;
-			if(getX() > -35 &&
-					!BaseMap.haveBarrier((getX()+35)/30-1, (getY()+72)/30))
-				setX(getX()-30);
-//			System.out.println(getX());
-			updateImageLeft();
-			break;
-		case right:
-			tap=2;
-			if(getX() < 415 &&
-					!BaseMap.haveBarrier((getX()+35)/30+1, (getY()+72)/30))
-				setX(getX()+30);
-//			System.out.println(getX());
-			updateImageRight();
-			break;
-		case stop:
-			tap=0;
-			if (hMoveType == hMoveType.stop) {
-				updateImageStop();
+			if(MapList[x][y-1]==0)
+			{
+				result=true;
+			}
+			else
+			{
+				System.out.println("top方向有障碍物!");
+				result=false;
 			}
 			break;
+		case down:
+			if(MapList[x][y+1]==0)
+			{
+				result=true;
+			}
+				
+			else
+			{
+				System.out.println("down方向有障碍物!");
+				result=false;
+			}
+			break;
+		case left:
+			if(MapList[x-1][y]==0)
+			{
+				result=true;
+			}
+			else
+			{
+				System.out.println("left方向有障碍物!");
+				result=false;
+			}
+			break;
+		case right:
+			if(MapList[x+1][y]==0)
+			{
+				result=true;
+			}
+			else
+			{
+				System.out.println("right方向有障碍物!");
+				result=false;
+			}
+			break;
+		case stop:
+			break;
+		}
+		return result;
+	}
+	
+	public void showxy()
+	{
+		System.out.println("角色得当前位置: "+"("+getX()/45+","+getY()/45+")");
+	}
+	
+	public void changeMapList()
+	{
+		for(int i=0;i<16;i++)
+		{
+			for(int j=0;j<16;j++)
+			{
+				MapList[j][i]=canwalk[i][j];
+			}
 		}
 	}
 	
@@ -183,7 +274,7 @@ public class Player extends SuperElement{
 		}
 	}
 
-	/*public void addFire()
+	public void addFire()
 	{
 //		按住空格不放持续射击
 //		if(time<10) {
@@ -194,24 +285,32 @@ public class Player extends SuperElement{
 		{
 			return;
 		}
-		List<SuperElement> list=ElementManger.getManger().getElementList("playFire");
+		
+		
 //		if(list==null)
 //		{
 //			list=new ArrayList<>();
 //		}
-		list.add(PlayerFire.createPlayerFire(getX(), getY(), ""));
+		
+		if(Bomb.CanAddBomb())
+		{
+			List<SuperElement> list=ElementManger.getManger().getElementList("playFire");
+			list.add(Bomb.createBomb(getX(), getY(), ""));
+		}
+		else return;
 		
 //		ElementManger.getManger().getMap().put("playFire", list);
 		
 		shoot=false;//每按一次只能发射一颗子弹
-	}*/
+	}
 	
 //	重写父类的模板
 	public void update()
 	{
 		//time++;
 		super.update();//如果没有这句话，就是重写制定模板
-		//addFire();//追加
+		addFire();//追加
+
 //		updateImage();
 	}
 	
@@ -264,6 +363,11 @@ public class Player extends SuperElement{
 		// TODO Auto-generated method stub
 		
 	}
+	//给出索引，返回数组内元素
+	public static int getCanwalkNum(int x,int y){
+		return canwalk[x][y];
+		}
+	
 	
 	
 }

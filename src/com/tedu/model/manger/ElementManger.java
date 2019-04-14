@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 import com.tedu.model.load.ElementLoad;
-import com.tedu.model.vo.Puzzle;
+import com.tedu.model.vo.Enemy;
 import com.tedu.model.vo.Player;
 //import com.tedu.model.vo.Moon;
 //import com.tedu.model.vo.Star;
@@ -26,10 +26,10 @@ public class ElementManger {
 //		暂时在这里实例化 工厂制作星星
 		List<SuperElement> list=new ArrayList<>();
 		List<SuperElement> list1=new ArrayList<>();
+		map.put("play", list);
 		map.put("enemy", list1);
-		map.put("player", list);
-		//map.put("playFire", new ArrayList<>());
-		//map.put("EnemyFire", new ArrayList<>());
+		map.put("playFire", new ArrayList<>());
+		map.put("EnemyFire", new ArrayList<>());
 		
 		
 //		List<SuperElement> list1=new ArrayList<>();
@@ -100,18 +100,10 @@ public class ElementManger {
 		ElementLoad.getElementLoad().readGamepro();
 //		开放一个状态，界面可以做前戏了（前面的过渡信息）
 //		。。。。。。
-		int i;
-        SuperElement[] enemies = ElementFactory.elementFactory("enemy");
-        if (enemies != null) {
-            for(i = 0; i < enemies.length; i++) map.get("enemy").add(enemies[i]);
-        }
-		SuperElement[] players = ElementFactory.elementFactory("oneplayer");
-		if (players != null) {
-			for(i = 0; i < players.length; i++) map.get("player").add(players[i]);
-		}
+		map.get("play").add(ElementFactory.elementFactory("oneplayer"));
 	}
 
-/*//控制流程 int time游戏进行时间
+//控制流程 int time游戏进行时间
 	public void linkGame(int time) {
 //		可以拿到流程list
 		List<String> list=ElementLoad.getElementLoad().getGameList();
@@ -125,11 +117,7 @@ public class ElementManger {
 		int runTime=Integer.parseInt(arr[arr.length-1]);
 		if(time>runTime)
 		{
-		    int i;
-            SuperElement[] enemies = ElementFactory.elementFactory("enemy");
-            if (enemies != null) {
-                for(i = 0; i < enemies.length; i++) map.get("enemy").add(enemies[i]);
-            }
+			map.get("enemy").add(ElementFactory.elementFactory("enemy"));
 			list.remove(list.size()-1);
 		}
 //		if(两个时间匹配上)
@@ -137,7 +125,7 @@ public class ElementManger {
 //			map.get("enemy").add(ElementFactory.elementFactory("enemy"));
 //			流程当中最前面的可以清除了
 //		}
-	}*/
+	}
 }
 
 
