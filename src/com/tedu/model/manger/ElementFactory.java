@@ -3,10 +3,8 @@ package com.tedu.model.manger;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
-
 import com.tedu.model.load.ElementLoad;
-import com.tedu.model.vo.Puzzle;
+import com.tedu.model.vo.Enemy;
 import com.tedu.model.vo.Player;
 import com.tedu.model.vo.SuperElement;
 
@@ -16,33 +14,20 @@ import com.tedu.model.vo.SuperElement;
 
 public class ElementFactory {
 	
-	public static SuperElement[] elementFactory(String name)
+	public static SuperElement elementFactory(String name)
 	{
 		Map<String,List<String>> map=ElementLoad.getElementLoad().getPlaymap();
 		List<String> list1=ElementLoad.getElementLoad().getGameList();
-
 		switch(name)
 		{
 		case "oneplayer":
 			List<String> list=map.get(name);
 			String s=list.get(0);//playerA,playFire,150,300,40,40
-			System.out.println("-----draw player-----");
 			System.out.println(s);
-			SuperElement[] players = { Player.createPlayer(s) };
-			return players;
+			return Player.createPlayer(s);
 		case "enemy":
-			System.out.println("-----draw enemy-----");
-            Puzzle[] enemys = new Puzzle[list1.size()];
-			int i;
-			for(i = 0; i < list1.size(); i++) {
-                String str = list1.get(i);
-                System.out.println(str);
-                enemys[i] = Puzzle.createPuzzle(str);
-            }
-			return enemys;
-		/*case"basemap":
-			String s2=basemap.get();
-			return Map.createBaseMap(s2);*/
+			String str=list1.get(list1.size()-1);
+			return Enemy.createEnemy(str);
 		}
 		
 		return null;

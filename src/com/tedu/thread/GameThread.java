@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.tedu.model.manger.ElementManger;
-import com.tedu.model.vo.Puzzle;
+import com.tedu.model.vo.Enemy;
 import com.tedu.model.vo.SuperElement;
 
 //java是单继承，多实现。通过内部类的方式，弥补单继承的缺陷
@@ -61,7 +61,7 @@ public class GameThread extends Thread{
 				String key=list.get(j);
 				
 				List<SuperElement> list1=map.get(key);
-				for(int i=list1.size()-1;i>=0;i--)
+				for(int i=0;i<=list1.size()-1;i++)
 				{
 					list1.get(i).update();
 					if(!list1.get(i).isVisible())
@@ -81,7 +81,7 @@ public class GameThread extends Thread{
 			
 			//死亡，通关等结束runGame
 			try {
-				sleep(110);
+				sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -104,29 +104,13 @@ public class GameThread extends Thread{
 		
 	}
 	
-	public void listPK(List<SuperElement> list1,List<SuperElement> list2)
-	{
-		for(int i=0;i<list1.size();i++)
-		{
-			for(int j=0;j<list2.size();j++)
-			{
-				if(list1.get(i).gamepk(list2.get(j))) 
-				{
-					int hp1=list1.get(i).getHp();
-					int hp2=list2.get(i).getHp();
-					list1.get(i).setHp(hp1-10);
-					list2.get(i).setHp(hp2-10);
-					if(list1.get(i).getHp()==0)
-					{
-						list1.get(i).setVisible(false);
-					}
-					if(list2.get(j).getHp()==0)
-					{
-						list2.get(j).setVisible(false);
-					}
-					
-					
-					break;
+	public void listPK(List<SuperElement> list1,
+			List<SuperElement> list2){
+		for(int i=0;i<list1.size();i++){
+			for(int j=0;j<list2.size();j++){
+				if(list1.get(i).gamePK(list2.get(j))){
+					list2.get(j).setVisible(false);
+					list1.get(i).setVisible(false);
 				}
 			}
 		}
@@ -139,7 +123,9 @@ public class GameThread extends Thread{
 //		List<SuperElement> list=map.get("enemy");
 //		if(time%100==0)
 //			list.add(Enemy.createEnemy(null));
-	}	
+		ElementManger.getManger().linkGame(time);
+	}
+	
 	
 //	控制进度，但是，作为控制，请不要接触load
 	private void loadElement() {

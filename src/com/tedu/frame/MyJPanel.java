@@ -77,8 +77,9 @@ public class MyJPanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		Image image=new ImageIcon("img/Background/Fin_baseMap.png").getImage();
-		g.drawImage(image, 0, 0, 600, 480, this);
-	}
+		Image image=new ImageIcon("img/Background/baseMap_ideal.png").getImage();
+//		g.drawImage(image, 0, 0, this);
+		g.drawImage(image, 0, 0, 900, 720, null);	
+		}
 
 }

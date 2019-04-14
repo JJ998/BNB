@@ -1,5 +1,5 @@
 bg=img/bg/1.png
-playerA=img/play/player1.png
+playerA=img/play/playerA-2.png
 playerB=img/play/3.png
 enemyA=img/enemy/12.png
 enemyB=img/enemy/11.png
