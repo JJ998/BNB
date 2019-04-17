@@ -18,19 +18,20 @@ public class Player extends SuperElement {
 	private int hp;//血量
 	private int num;//分数
 	private ImageIcon img;
+	//	地图障碍数组，0表示可以行走
+	private static int[][] MapList = new int[16][16];
+	private static int[][] canwalk = new int[16][16];
 	public static int flag = 0;
 	private static int bomb_flag = 0;
 	private static int pdemon_flag = 0;//没有吃到紫鬼头
-	//	地图障碍数组，0表示可以行走
-	private static int MapList[][] = new int[16][16];
-	private static int canwalk[][] = new int[16][16];
-	private static int PropList[][] = new int[16][16];
+	private static int[][] PropList = new int[16][16];
 	private static int p = 1;
 	int tap = 0;
 	private MoveType moveType;//0 1 2 3
-	private int playtype;
+
 	private int moveX = 0;
 	private int moveY = 0;
+	private int playtype;
 
 
 	private boolean shoot;//攻击状态，默认为false
@@ -43,6 +44,12 @@ public class Player extends SuperElement {
 		moveType = MoveType.stop;
 		shoot = false;
 		this.playtype = playtype;
+	}
+
+	//获取canwalk数组状态
+	public static int getCanwalkNum(int x1, int y1) {
+		// TODO Auto-generated method stub
+		return canwalk[x1][y1];
 	}
 
 	//  可以直接调用这个方法，用来得到一个玩家对象 str里面包含玩家对象的信息
@@ -60,31 +67,6 @@ public class Player extends SuperElement {
 		return new Player(x, y, w, h, img, playtype);
 	}
 
-	;
-
-	//获取canwalk数组状态
-	public static int getCanwalkNum(int x1, int y1) {
-		// TODO Auto-generated method stub
-		return canwalk[x1][y1];
-	}
-
-	//改变canwalk数组状态
-	public static void setCanwalkNum(int x1, int y1, int change) {
-		System.out.println(x1 + " " + y1 + MapList[y1][x1]);
-		MapList[x1][y1] = change;
-		System.out.println("set" + x1 + " " + y1 + MapList[y1][x1]);
-	}
-
-	public void readMap() {
-		try {
-			BaseMap baseMap = new BaseMap("com/tedu/pro/map/level1.pro");
-			PropList = Prop.getPropList();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		canwalk = BaseMap.getMap();
-	}
-
 	@Override
 	public void showElement(Graphics g) {
 		if (flag < 1) {
@@ -99,6 +81,123 @@ public class Player extends SuperElement {
 				null);
 		flag = 1;
 
+	}
+
+	//改变canwalk数组状态
+	public static void setCanwalkNum(int x1, int y1, int change) {
+		System.out.println(x1 + " " + y1 + MapList[y1][x1]);
+		MapList[x1][y1] = change;
+		System.out.println("set" + x1 + " " + y1 + MapList[y1][x1]);
+	}
+
+	public void Set_MedicineBottle_Invisible(int x, int y) {
+		List<SuperElement> proList = ElementManger.getManger().getElementList("puzzlp");
+		for (int j = 0; j < proList.size(); j++) {
+			int propX = proList.get(j).getX();
+			int propY = proList.get(j).getY();
+			if (x == propX && y == propY) {
+				proList.get(j).setVisible(false);
+			}
+		}
+	}
+
+	public boolean judge(int getX, int getY, MoveType moveType)//判断前进的方向是否有障碍物，如果有返回false，没有返回true
+	{
+		boolean result = false;
+		int x = getX / 45;
+		int y = getY / 45;
+
+		switch (moveType) {
+			case top:
+				if (MapList[x][y - 1] == 0) {
+					result = true;
+				} else {
+					System.out.println("top方向有障碍物!");
+					result = false;
+				}
+				break;
+			case down:
+				if (MapList[x][y + 1] == 0) {
+					result = true;
+				} else {
+					System.out.println("down方向有障碍物!");
+					result = false;
+				}
+				break;
+			case left:
+				if (MapList[x - 1][y] == 0) {
+					result = true;
+				} else {
+					System.out.println("left方向有障碍物!");
+					result = false;
+				}
+				break;
+			case right:
+				if (MapList[x + 1][y] == 0) {
+					result = true;
+				} else {
+					System.out.println("right方向有障碍物!");
+					result = false;
+				}
+				break;
+			case stop:
+				break;
+		}
+		return result;
+	}
+
+	public void showxy() {
+		System.out.println("角色得当前位置: " + "(" + getX() / 45 + "," + getY() / 45 + ")");
+	}
+
+
+	private void updateImageStop() {
+		// TODO Auto-generated method stub
+		moveX = 0;
+		moveY = 0;
+	}
+
+	private void updateImageTop() {
+		// TODO Auto-generated method stub
+		moveY = 3;
+		moveX++;
+		if (moveX > 3) {
+			moveX = 0;
+		}
+	}
+
+	public void updateImageDown() {
+		moveY = 0;
+		moveX++;
+		if (moveX > 3) {
+			moveX = 0;
+		}
+	}
+
+	private void updateImageLeft() {
+		moveY = 1;
+		moveX++;
+		if (moveX > 3) {
+			moveX = 0;
+		}
+	}
+
+	private void updateImageRight() {
+		moveY = 2;
+		moveX++;
+		if (moveX > 3) {
+			moveX = 0;
+		}
+	}
+
+	public void readMap() {
+		try {
+			BaseMap baseMap = new BaseMap("com/tedu/pro/map/level1.pro");
+			PropList = Prop.getPropList();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		canwalk = BaseMap.getMap();
 	}
 
 	public void move() {
@@ -168,105 +267,6 @@ public class Player extends SuperElement {
 
 	}
 
-	public void Set_MedicineBottle_Invisible(int x, int y) {
-		List<SuperElement> proList = ElementManger.getManger().getElementList("puzzlp");
-		for (int j = 0; j < proList.size(); j++) {
-			int propX = proList.get(j).getX();
-			int propY = proList.get(j).getY();
-			if (x == propX && y == propY) {
-				proList.get(j).setVisible(false);
-			}
-		}
-	}
-
-	public boolean judge(int getX, int getY, MoveType moveType)//判断前进的方向是否有障碍物，如果有返回false，没有返回true
-	{
-		boolean result = false;
-		int x = getX / 45;
-		int y = getY / 45;
-
-		switch (moveType) {
-			case top:
-				if (MapList[x][y - 1] == 0) {
-					result = true;
-				} else {
-					System.out.println("top方向有障碍物!");
-					result = false;
-				}
-				break;
-			case down:
-				if (MapList[x][y + 1] == 0) {
-					result = true;
-				} else {
-					System.out.println("down方向有障碍物!");
-					result = false;
-				}
-				break;
-			case left:
-				if (MapList[x - 1][y] == 0) {
-					result = true;
-				} else {
-					System.out.println("left方向有障碍物!");
-					result = false;
-				}
-				break;
-			case right:
-				if (MapList[x + 1][y] == 0) {
-					result = true;
-				} else {
-					System.out.println("right方向有障碍物!");
-					result = false;
-				}
-				break;
-			case stop:
-				break;
-		}
-		return result;
-	}
-
-	public void showxy() {
-		System.out.println("角色得当前位置: " + "(" + getX() / 45 + "," + getY() / 45 + ")");
-	}
-
-	private void updateImageStop() {
-		// TODO Auto-generated method stub
-		moveX = 0;
-		moveY = 0;
-	}
-
-	private void updateImageTop() {
-		// TODO Auto-generated method stub
-		moveY = 3;
-		moveX++;
-		if (moveX > 3) {
-			moveX = 0;
-		}
-	}
-
-	public void updateImageDown() {
-		moveY = 0;
-		moveX++;
-		if (moveX > 3) {
-			moveX = 0;
-		}
-	}
-
-	private void updateImageLeft() {
-		moveY = 1;
-		moveX++;
-		if (moveX > 3) {
-			moveX = 0;
-		}
-	}
-
-	private void updateImageRight() {
-		moveY = 2;
-		moveX++;
-		if (moveX > 3) {
-			moveX = 0;
-		}
-	}
-
 
 	public int getHp() {
 		return hp;
@@ -308,27 +308,11 @@ public class Player extends SuperElement {
 		this.shoot = shoot;
 	}
 
-	public void addBomb() {
-		if (!shoot)//如果shoot为false，就不需要添加子弹
-		{
-			return;
-		}
-		if (Bomb.CanAddBomb()) {
-			List<SuperElement> list = ElementManger.getManger().getElementList("playBomb");
-			list.add(Bomb.createBomb(getX(), getY(), ""));
-		} else return;
-		shoot = false;//每按一次只能放放一个炸弹
-	}
-
-	//	重写父类的模板
-	public void update() {
-		move();
-		addBomb();//放炸弹
-	}
 
 	public int getPlaytype() {
 		return playtype;
 	}
+
 
 	public void setPlaytype(int playtype) {
 		playtype = playtype;
@@ -346,6 +330,24 @@ public class Player extends SuperElement {
 				MapList[j][i] = canwalk[i][j];
 			}
 		}
+	}
+
+	public void addBomb() {
+		if (!shoot)//如果shoot为false，就不需要添加子弹
+		{
+			return;
+		}
+		if (Bomb.CanAddBomb()) {
+			List<SuperElement> list = ElementManger.getManger().getElementList("playBomb");
+			list.add(Bomb.createBomb(getX(), getY(), ""));
+		} else return;
+		shoot = false;//每按一次只能放放一个炸弹
+	}
+
+	//	重写父类的模板
+	public void update() {
+		move();
+		addBomb();//放炸弹
 	}
 
 	public void contrary_move() {

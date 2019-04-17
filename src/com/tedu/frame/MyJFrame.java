@@ -61,7 +61,7 @@ public class MyJFrame extends JFrame{
 		if(jp!=null)
 		{
 			this.add(jp);
-		} else {
+        } else {
             throw new RuntimeException("游戏初始加载失败");
         }
 	}
@@ -76,8 +76,8 @@ public class MyJFrame extends JFrame{
 //		界面刷新线程启动
 		if(jp instanceof Runnable)//jp引用指向的实体对象是不是Runnable的子类
 		{
-			new Thread((MyJPanel)jp).start();;
-		}
+            new Thread((MyJPanel) jp).start();
+        }
 		
 		
 		this.setVisible(true);//窗体显示

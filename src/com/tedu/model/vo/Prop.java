@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 
 public class Prop extends SuperElement {
     public static int num_medicineBottle = 0;//记录药瓶数量
-    private static int PropList[][] = new int[16][16];//记录地图里道具的位置
+    private static int[][] PropList = new int[16][16];//记录地图里道具的位置
     //	先加：
 //	泡泡：增加泡泡设置数目，获得两个增加一个泡泡
 //	蓝药瓶：增加泡泡爆炸威力

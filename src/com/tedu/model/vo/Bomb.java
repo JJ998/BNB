@@ -25,9 +25,7 @@ public class Bomb extends SuperElement{
 	
 	public static boolean CanAddBomb(){
 		System.out.println(Bomb_Num);
-		if(Bomb_Num-1<0)
-			return false;
-		else return true;
+        return Bomb_Num - 1 >= 0;
 	}
 	public static Bomb createBomb(int x,int y,String str){
 
@@ -41,7 +39,7 @@ public class Bomb extends SuperElement{
         g.drawImage(img.getImage(), getX(), getY(), getX() + getW(), getY() + getH(), 0 + (32 * moveX), 0, 32 + (32 * moveX), 46, null);
 
     }
-
+	
 //	public void throwBomb() {
 //		if(boomed) {
 //		new Thread(new BombBump()).start();
@@ -52,15 +50,6 @@ public class Bomb extends SuperElement{
     public void updateImage() {
         moveX = (moveX + 1) % 4;
     }
-
-	@Override
-	public void move() {
-        // TODO Auto-generated method stub
-		if(boomed) {
-            new Thread(new BombBump()).start();
-        }
-        boomed = false;
-	}
 
     public ImageIcon getImg() {
         return img;
@@ -73,6 +62,15 @@ public class Bomb extends SuperElement{
     @Override
     public void destroy() {
         Bomb_Num++;
+    }
+
+    @Override
+    public void move() {
+        // TODO Auto-generated method stub
+        if (boomed) {
+            new Thread(new BombBump()).start();
+        }
+        boomed = false;
     }
 
     public void judge() {

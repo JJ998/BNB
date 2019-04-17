@@ -33,7 +33,7 @@ public class Water extends SuperElement{
         Player.setCanwalkNum(x, y, 0);
 		for(int d=0;d<4;d++){
 			for(int BoomNum=0;BoomNum<bomb_energe;BoomNum++){
-			switch(d) {
+                switch (d) {
 			case 0://上
                 if (y - 1 - BoomNum < 0) {
                     BoomNum = bomb_energe;
@@ -41,7 +41,7 @@ public class Water extends SuperElement{
                 }//越界处理
                 box1 = Player.getCanwalkNum(y - 1 - BoomNum, x);
 					if(box1!=0){
-						if(box1==1) {
+                        if (box1 == 1) {
                             BoomNum = bomb_energe;
                             break;
                         }
@@ -90,7 +90,7 @@ public class Water extends SuperElement{
 					if(box1!=0){
 						if(box1==1)
 						{BoomNum=bomb_energe;break;}
-						if(box1==2) {
+                        if (box1 == 2) {
                             waterlist.add(new Water(x * 45, (y + 1 + BoomNum) * 45, 45, 45, img, 5, 1));
                             Player.setCanwalkNum(x, (y + 1 + BoomNum), 0);
                             BoomNum = bomb_energe;
@@ -121,21 +121,21 @@ public class Water extends SuperElement{
 					}
 					break;
 
-                case 2://左
-                    if (x - 1 - BoomNum < 0) {
-                        BoomNum = bomb_energe;
-                        break;
-                    }//越界处理
-                    box1 = Player.getCanwalkNum(y, x - 1 - BoomNum);
+                    case 2://左
+                        if (x - 1 - BoomNum < 0) {
+                            BoomNum = bomb_energe;
+                            break;
+                        }//越界处理
+                        box1 = Player.getCanwalkNum(y, x - 1 - BoomNum);
 //				System.out.println("0box1"+box1);
-                    if (BoomNum + 1 == bomb_energe)
-                        waterlist.add(new Water((x - 1 - BoomNum) * 45, y * 45, 45, 45, img, 8, 0));
+                        if (BoomNum + 1 == bomb_energe)
+                            waterlist.add(new Water((x - 1 - BoomNum) * 45, y * 45, 45, 45, img, 8, 0));
 					if(box1!=0){
-						if(box1==1) {
+                        if (box1 == 1) {
                             BoomNum = bomb_energe;
                             break;
                         }
-						if(box1==2) {
+                        if (box1 == 2) {
                             waterlist.add(new Water((x - 1 - BoomNum) * 45, y * 45, 45, 45, img, 8, 1));
                             Player.setCanwalkNum((x - 1 - BoomNum), y, 0);
                             BoomNum = bomb_energe;
@@ -147,22 +147,22 @@ public class Water extends SuperElement{
                         }
                         //System.out.println("0x0 "+BoomNum);
                     }
-                    if (box1 == 0) {
-                        if (x - 2 - BoomNum < 0) {
-                            waterlist.add(new Water((x - 1 - BoomNum) * 45, y * 45, 45, 45, img, 8, 0));
-                            BoomNum = bomb_energe;
-                            break;
-                        }//越界处理
-                        box2 = Player.getCanwalkNum(y, x - 2 - BoomNum);
-                        if (box2 == 1 || BoomNum + 1 == bomb_energe) {
-                            waterlist.add(new Water((x - 1 - BoomNum) * 45, y * 45, 45, 45, img, 8, 0));
-                            break;
-                        }
-                        if (box2 == 2 || box2 == 0) {
-                            waterlist.add(new Water((x - 1 - BoomNum) * 45, y * 45, 45, 45, img, 4, 0));
-                            break;
-                        }
-                        //System.out.println("0x1 "+BoomNum);
+                        if (box1 == 0) {
+                            if (x - 2 - BoomNum < 0) {
+                                waterlist.add(new Water((x - 1 - BoomNum) * 45, y * 45, 45, 45, img, 8, 0));
+                                BoomNum = bomb_energe;
+                                break;
+                            }//越界处理
+                            box2 = Player.getCanwalkNum(y, x - 2 - BoomNum);
+                            if (box2 == 1 || BoomNum + 1 == bomb_energe) {
+                                waterlist.add(new Water((x - 1 - BoomNum) * 45, y * 45, 45, 45, img, 8, 0));
+                                break;
+                            }
+                            if (box2 == 2 || box2 == 0) {
+                                waterlist.add(new Water((x - 1 - BoomNum) * 45, y * 45, 45, 45, img, 4, 0));
+                                break;
+                            }
+                            //System.out.println("0x1 "+BoomNum);
 					}
 					break;
 			case 3://右
@@ -176,7 +176,7 @@ public class Water extends SuperElement{
 					if(box1!=0){
 						if(box1==1)
 						{BoomNum=bomb_energe;break;}
-						if(box1==2) {
+                        if (box1 == 2) {
                             waterlist.add(new Water((x + 1 + BoomNum) * 45, y * 45, 45, 45, img, 7, 1));
                             Player.setCanwalkNum((x + 1 + BoomNum), y, 0);
                             BoomNum = bomb_energe;
@@ -208,7 +208,7 @@ public class Water extends SuperElement{
 					}
 					break;
 
-            }
+                }
 			}
 		}
 //		return waterlist;

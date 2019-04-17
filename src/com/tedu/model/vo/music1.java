@@ -10,7 +10,6 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
-
 public class music1 extends Thread {
     private final int EXTERNAL_BUFFER_SIZE = 524288;
     private String fileName;
