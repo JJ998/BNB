@@ -1,5 +1,9 @@
 package com.tedu.model.load;
 
+import com.tedu.model.vo.BaseMap;
+import com.tedu.model.vo.music1;
+import com.tedu.model.vo.myMusicPlay;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -17,7 +21,9 @@ public class ElementLoad {
 	private Map<String,List<String>> playmap;
 	private Map<String,List<String>> enemymap;
 	private List<String> gameList;//游戏的流程控制 兵力出现控制
-	
+    private List<String> propList;// 道具图
+    private Map<String, ImageIcon> basemap;//	地图
+
 	private static ElementLoad load;
 //	pro文件读取对象
 	private Properties pro;
@@ -27,7 +33,11 @@ public class ElementLoad {
 		map=new HashMap<>();
 		pro=new Properties();
 		playmap=new HashMap<>();
-		gameList=new ArrayList<>();
+        // TODO: 以后可以把gameList改名为puzzleList
+        gameList = new ArrayList<>(); // 箱子字符串
+        propList = new ArrayList<>(); // 道具字符串
+        music1 audioPlayWave = new music1("music/bg.wav");// 开音乐
+        audioPlayWave.start();
 	}
 	public static synchronized ElementLoad getElementLoad()
 	{
@@ -37,25 +47,15 @@ public class ElementLoad {
 		}
 		return load;
 	}
-	
-//	读取流程
+
+    //	读取箱子、道具
 	public void readGamepro()
 	{
-		InputStream in=ElementLoad.class.getClassLoader().getResourceAsStream("com/tedu/pro/GameRunA.pro");
-		pro.clear();
 		try {
-			pro.load(in);
-			for(Object o:pro.keySet())
-			{
-				String str=pro.getProperty(o.toString());
-//				System.out.println(pro.keySet());
-//				System.out.println(str);
-				gameList.add(str);
-//				System.out.println(str);
-			}
-			System.out.println(gameList);
+            BaseMap baseMap = new BaseMap("com/tedu/pro/map/level1.pro");
+            gameList = baseMap.getGameList();
+            propList = baseMap.getPropList();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -63,46 +63,23 @@ public class ElementLoad {
 //	读取图片
 	public void readImgPro()
 	{
-		InputStream in=ElementLoad.class.getClassLoader().getResourceAsStream("com/tedu/pro/map1.pro");
+        InputStream in = ElementLoad.class.getClassLoader().getResourceAsStream("com/tedu/pro/map.pro");
 		try {
 			pro.clear();
 			pro.load(in);
 			Set<?> set=pro.keySet();
 			for(Object o:set)
 			{
-				//pro.getProperty((String)o);
 				String url=pro.getProperty(o.toString());
 				map.put(o.toString(), new ImageIcon(url));
-				
 			}
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(map);
 	}
 	
-//	public void readImgPros(int num)
-//	{
-//		InputStream in=ElementLoad.class.getClassLoader().getResourceAsStream("com/tedu/pro/map"+num+".pro");
-//		try {
-//			pro.clear();
-//			pro.load(in);
-//			Set<?> set=pro.keySet();
-//			for(Object o:set)
-//			{
-////				pro.getProperty((String)o);
-//				String url=pro.getProperty(o.toString());
-//				map.put(o.toString(), new ImageIcon(url));
-//				
-//			}
-//			
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
 	
 //	读取主角配置
 	public void readPlayPro()
@@ -118,8 +95,8 @@ public class ElementLoad {
 				list.add(str);
 				playmap.put((String) o,list);
 			}
+            System.out.println("从play.pro文件中读出来的数据长度" + list.size());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(playmap);
@@ -146,6 +123,15 @@ public class ElementLoad {
 	public List<String> getGameList() {
 		return gameList;
 	}
+
+    public List<String> getPropList() {
+        return propList;
+    }
+
+    //下面加载地图上的各种原件
+    public Map<String, ImageIcon> getBaseMap() {
+        return basemap;
+    }
 	
 		
 }

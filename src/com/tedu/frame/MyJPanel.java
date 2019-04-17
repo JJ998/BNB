@@ -36,8 +36,6 @@ public class MyJPanel extends JPanel implements Runnable{
 
 	private void gameRuntime(Graphics g) 
 	{
-//		List<SuperElement> list=ElementManger.getManger().getElementList("XX");
-//		g.drawString("*", 100, 100);
 		Map<String,List<SuperElement>> map=ElementManger.getManger().getMap();
 		Set<String> set=map.keySet();
 		for(String key:set)
@@ -67,7 +65,6 @@ public class MyJPanel extends JPanel implements Runnable{
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			this.repaint();
@@ -77,9 +74,8 @@ public class MyJPanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		Image image=new ImageIcon("img/Background/baseMap_ideal.png").getImage();
-//		g.drawImage(image, 0, 0, this);
-		g.drawImage(image, 0, 0, 900, 720, null);	
-		}
+		Image image = new ImageIcon("img/Background/Fin_baseMap.png").getImage();
+		g.drawImage(image, 0, 0, 900, 720, null);
+	}
 
 }

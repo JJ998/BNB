@@ -33,8 +33,8 @@ public class MyJFrame extends JFrame{
 	public void init()
 	{
 		this.setTitle("game");//设置标题
-		this.setSize(900, 825);//设置大小
-		//this.setResizable(false);//设置窗体不可以修改大小
+        this.setSize(900, 760);//设置大小
+        this.setResizable(false);//设置窗体不可以修改大小
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置关闭状态
 		this.setLocationRelativeTo(null);//设置居中
 	}
@@ -61,11 +61,9 @@ public class MyJFrame extends JFrame{
 		if(jp!=null)
 		{
 			this.add(jp);
-		}
-//		else
-//		{
-//			throw new RuntimeException("游戏初始加载失败");
-//		}
+		} else {
+            throw new RuntimeException("游戏初始加载失败");
+        }
 	}
 	
 	public void start()

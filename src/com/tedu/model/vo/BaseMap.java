@@ -16,24 +16,17 @@ import com.tedu.model.load.ElementLoad;
 
 public class BaseMap extends SuperElement{
 	private URL mapPath = BaseMap.class.getClassLoader().getResource("com/tedu/pro/map/level1.pro");
-	private static int map[][];//存放对应位置上的0，1，2
+    private static int[][] map;//存放对应位置上的0，1，2
 	private int rows;//地图单元格行数
 	private int cols;//地图单元格列数
-	private String mapPuzzlePath[];//存放每一个单元格存放的图片的地址
 	private ImageIcon img; //调用一次的一张控件图片
 	private int state;//控件的状态（0，1，2）
 	private List<String> gameList;
-		
-//	创建一个元件
-	/*public BaseMap(int state,int x,int y,int w,int h,int time,ImageIcon img) {
-		super(x,y,w,h);
-		this.setImg(img);
-		this.setState(state);
-	}*/
+    private List<String> Prop_map;
 
 	public BaseMap(String file) throws IOException {
 		mapPath = BaseMap.class.getClassLoader().getResource(file);
-		System.out.println(mapPath);
+//		System.out.println(mapPath);
 		BufferedReader reader;
 		try {
 			reader = new BufferedReader(new FileReader(mapPath.toString().split("file:")[1]));
@@ -62,78 +55,51 @@ public class BaseMap extends SuperElement{
             //生成 获取该位置的组件 的字符串，如001=enemyA,enemyA,20,40,40,40,100
             Integer x, y;
             gameList = new ArrayList<>();
+
             for (i = 0; i < cols; i++) {
                 for (j = 0; j < rows; j++) {
                     // enemjA,enemjA,20,40,40,40,100
                     int state = map[i][j];
                     String s = randomImg(state);
-                    y = i * 30;
-                    x = j * 30;
-                    String tempStr = s + ",enemy," + x.toString() + "," + y.toString() + ",30,30,0";
+                    y = i * 45;
+                    x = j * 45;
+                    String tempStr = s + ",puzzle," + x.toString() + "," + y.toString() + ",45,45,0";
 //                    System.out.println(tempStr);
                     if (state > 0) gameList.add(tempStr);
                 }
             }
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int[][] getMap() {
+        return map;
+    }
 
 	public List<String> getGameList() {
 		return gameList;
 	}
 
-//	读入文件配置[地图数据(txt),得0，1，2状态]，并为各元件连接图片。
-	/*public void createBaseMap(String file) throws IOException {
-		mapPath = file;
-		BufferedReader reader;
-		try {
-			reader = new BufferedReader(new FileReader(mapPath));
-			String tempString;
-			tempString = reader.readLine();
-			String[] size = tempString.split(","); // 行列
-			map = new int[Integer.parseInt(size[0])][Integer.parseInt(size[1])];
-			
-			int i, j;
-			i = 0;
-			j = 0;
-			// 将文件读取到map数组里
-			while ((tempString = reader.readLine()) != null) {
-				String[] numbers = tempString.split(",");
-				j = 0;
-				for(String num : numbers)
-					map[i][j++] = Integer.parseInt(num);
-				i++;
+    public List<String> getPropList() {
+//      随机加道具
+        Prop_map = new ArrayList<>();
+        int i, j;
+        Integer x, y;
+        for (i = 0; i < cols; i++) {
+            for (j = 0; j < rows; j++) {
+                if (map[i][j] != 2) continue;
+                String haveProp = Prop.randomProp();
+                if (!haveProp.equals("nothing")) {
+                    x = j * 45;
+                    y = i * 45;
+                    String temp_str = haveProp + "," + x.toString() + "," + y.toString();
+                    Prop_map.add(temp_str);
+                }
             }
-			cols = i-1;
-			rows = j-1;
-			reader.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		//TODO:获取对应位置的状态
-		//并根据状态，随机生成对应的组件
-		//生成 获取该位置的组件 的字符串，如001=enemyA,enemyA,20,40,40,40,100
-		int x,y,k;
-		int th=0;
-		k=0;
-		BaseMap puzzle=null;
-		for(x=0;x<cols;x++) {
-			
-			for(y=0;y<rows;y++) {			
-				
-				int state = map[x][y];
-				String s=randomImg(state);
-				mapPuzzlePath[k] = th +"="+ s +",enemy,"+ x*45 +","+ y*45 + "45,45,0";
-				th++;
-				System.out.println(mapPuzzlePath[k]+"\n");
-				img = ElementLoad.getElementLoad().getBaseMap().get(s);
-				puzzle=new BaseMap(state,x,y,45,45,0,img);
-			}
-		}
-		
-	}*/
+        }
+        return Prop_map;
+    }
 	
 	public String randomImg(int state) {
 		Random r=new Random();

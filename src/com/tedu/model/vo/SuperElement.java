@@ -47,7 +47,7 @@ public abstract class SuperElement {
 	}
 	
 //	你是选择this pk参数 还是参数pk参数
-	public boolean gamePK(SuperElement se)
+public boolean gamepk(SuperElement se)
 	{
 		Rectangle r1=new Rectangle(x,y,w,h);
 		Rectangle r2=new Rectangle(se.x,se.y,se.w,se.h);

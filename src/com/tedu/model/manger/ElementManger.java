@@ -7,10 +7,8 @@ import java.util.Map;
 import java.util.Random;
 
 import com.tedu.model.load.ElementLoad;
-import com.tedu.model.vo.Enemy;
+import com.tedu.model.vo.Puzzle;
 import com.tedu.model.vo.Player;
-//import com.tedu.model.vo.Moon;
-//import com.tedu.model.vo.Star;
 import com.tedu.model.vo.SuperElement;
 
 //	元素管理器
@@ -23,34 +21,14 @@ public class ElementManger {
 	protected void init()
 	{
 		map=new HashMap();
-//		暂时在这里实例化 工厂制作星星
 		List<SuperElement> list=new ArrayList<>();
 		List<SuperElement> list1=new ArrayList<>();
-		map.put("play", list);
-		map.put("enemy", list1);
-		map.put("playFire", new ArrayList<>());
-		map.put("EnemyFire", new ArrayList<>());
-		
-		
-//		List<SuperElement> list1=new ArrayList<>();
-//		Random random=new Random();
-//		for(int i=0;i<100;i++)
-//		{
-//			Star star=new Star(random.nextInt(300),random.nextInt(400),0,0);
-//			list.add(star);
-//		}
-//		map.put("a", list);
-//		Moon moon1=new Moon(200,200,50,50);
-//		Moon moon2=new Moon(150,200,50,50);
-//		list1.add(moon1);
-//		list1.add(moon2);
-//		map.put("b", list1);
-		
-		
-//		1.定义一个月亮类，继承SuperElement
-//		2.重写方法，ShowElement
-//		3.定义一个list，存放一个月亮进去
-//		4.list加入到map中
+		map.put("puzzlp", new ArrayList<>());//放道具的
+		map.put("puzzle", list1);
+		map.put("player", list);
+		map.put("playBomb", new ArrayList<>());
+		map.put("wate", new ArrayList<>());
+
 	}
 	
 //	集合 NPC元素，场景元素，。。。
@@ -100,32 +78,25 @@ public class ElementManger {
 		ElementLoad.getElementLoad().readGamepro();
 //		开放一个状态，界面可以做前戏了（前面的过渡信息）
 //		。。。。。。
-		map.get("play").add(ElementFactory.elementFactory("oneplayer"));
+		int i;
+		SuperElement[] props = ElementFactory.elementFactory("prop");
+		if (props != null) {
+			for (i = 0; i < props.length; i++) map.get("puzzlp").add(props[i]);
+		}
+
+		SuperElement[] puzzles = ElementFactory.elementFactory("puzzle");
+		if (puzzles != null) {
+			for (i = 0; i < puzzles.length; i++) map.get("puzzle").add(puzzles[i]);
+		}
+
+		SuperElement[] players = ElementFactory.elementFactory("oneplayer");
+		if (players != null) {
+			for (i = 0; i < players.length; i++) map.get("player").add(players[i]);
+		}
+
+		System.out.println("player数组的长度为" + players.length);
 	}
 
-//控制流程 int time游戏进行时间
-	public void linkGame(int time) {
-//		可以拿到流程list
-		List<String> list=ElementLoad.getElementLoad().getGameList();
-		if(list.size()==0)
-		{
-//			System.out.println("流程结束");
-			return;//流程结束
-		}
-		String s=list.get(list.size()-1);
-		String [] arr=s.split(",");
-		int runTime=Integer.parseInt(arr[arr.length-1]);
-		if(time>runTime)
-		{
-			map.get("enemy").add(ElementFactory.elementFactory("enemy"));
-			list.remove(list.size()-1);
-		}
-//		if(两个时间匹配上)
-//		{
-//			map.get("enemy").add(ElementFactory.elementFactory("enemy"));
-//			流程当中最前面的可以清除了
-//		}
-	}
 }
 
 
